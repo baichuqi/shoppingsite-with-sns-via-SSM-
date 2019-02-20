@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bai.springboot.dao.SellerMapper">
+    <select id="list" resultType="com.bai.springboot.entity.Seller">
+        select *
+        from seller
+    </select>
+    <select id="findById" parameterType="String" resultType="com.bai.springboot.entity.Seller">
+        select *
+        from seller
+        where id = #{id}
+    </select>
+    <update id="update" parameterType="com.bai.springboot.entity.Seller">
+        update seller
+        <set>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="logined!=null and logined!=''">
+                logined=#{logined},
+            </if>
+            <if test="sessionid!=null and sessionid!=''">
+                sessionid=#{sessionid}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        delete
+        from seller
+        where id = #{id}
+    </delete>
+    <insert id="save" parameterType="com.bai.springboot.entity.Seller" keyColumn="id" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into seller (id,name,password)
+        values (#{id},#{name},#{password})
+    </insert>
+</mapper>

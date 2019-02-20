@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bai.springboot.dao.UserMapper">
+    <select id="list" resultType="com.bai.springboot.entity.User">
+        select *
+        from user
+    </select>
+    <select id="findById" parameterType="String" resultType="com.bai.springboot.entity.User">
+        select *
+        from user
+        where id = #{id}
+    </select>
+    <update id="update" parameterType="com.bai.springboot.entity.User">
+        update User
+        <set>
+            <if test="fakename!=null and fakename!=''">
+                fakename=#{fakename},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="rightNum!=null and rightNum!=''">
+                rightNum=#{rightNum},
+            </if>
+            <if test="logined!=null and logined!=''">
+                logined=#{logined},
+            </if>
+            <if test="sessionid!=null and sessionid!=''">
+                sessionid=#{sessionid}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+    <insert id="save" parameterType="com.bai.springboot.entity.User" keyColumn="id" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into user (id,fakename,password,rightNum)
+        values (#{id},#{fakename},#{password}, #{rightNum})
+    </insert>
+</mapper>

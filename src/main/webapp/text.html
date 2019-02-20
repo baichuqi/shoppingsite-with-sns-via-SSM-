@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>product list</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.dialogbox.css">
+	<link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.dialogBox.js"></script>
+	<style type="text/css">
+	*{ margin: 0; padding: 0; }
+		dl{ font:12px normal 'Microsoft YaHei'; width: 900px; height: 100%; overflow: hidden; margin: 20px auto;  border:1px solid #eee; background: #f8f8f8; padding: 20px; }
+		dl dt{ width: 100%; height: 30px; line-height: 30px; font-size: 14px; font-weight: bold; }
+		dl dd{ padding: 10px; }
+		pre{ color:#fff; height: 100%; overflow: hidden; background: #66BE8C; margin: 10px 0; word-break: normal; word-wrap:break-word;}
+		code{ word-break: normal;}
+		ul,li{ list-style: none; }
+	body > * {
+		width: 100%;
+		border: 0;
+		padding: 0;
+		margin: 0;
+	}
+	header {
+		top: 0;
+		height: 80px;
+		background: gray;
+		position: fixed;
+	}
+	img {
+		width: 200px;
+		height: 200px;
+		margin: 35px;
+		float: left;
+	}
+	.seller_id{
+		z-index: 20;
+
+	}
+
+	#container{
+		width: 100%;
+	    margin: 80px 0 80px 0;
+	    height: 789px;
+	    
+	    right: 0;
+	}
+	#left_cnt{
+		    width: 10%;
+    height: 100%;
+    float: left;
+    background: gray;
+	}
+	#center_cnt{
+		    width: 70%;
+    height: 100%;
+    float: left;
+    /* background: pink; */
+    overflow-y: auto;
+    margin: 0 5% 0 5%;
+	}
+	#right_cnt{
+		    height: 100%;
+    width: 10%;
+    background: black;
+    float: right;
+    right: 0;
+	}
+	footer {
+		    width: 100%;
+    height: 80px;
+    background: green;
+    bottom: 0;
+    position: fixed;
+	}
+	 .product_box {
+		width: 100%;
+		height: 300px;
+		border: solid 1px black;
+		margin-top: 10px;
+		z-index: 0;
+	}
+	.product_detail {
+		margin: 35px 0 35px 270px;
+	}
+	.button {
+		float: right;
+		margin: 20px 50px 0 0;
+	}
+	/*
+	#login {
+		width: 400px;
+		height: 200px;
+		position: fixed;
+		top: 400px;
+		left: 400px;
+		background: yellow;
+	} */
+	 /*搜索框7*/
+	 	div.search {padding: 30px 0;}
+	 	
+	 	        form {
+	 	            position: relative;
+	 	            width: 300px;
+	 	            margin: 0 auto;
+	 	        }
+	 	
+	 	        form input, .btn1 {
+	 	            border: none;
+	 	            outline: none;
+	 	        }
+	 	
+	 	        form input {
+	 	            width: 100%;
+	 	            height: 42px;
+	 	            padding-left: 13px;
+	 	        }
+	 	
+	 	        .btn1 {
+	 	            height: 42px;
+	 	            width: 42px;
+	 	            cursor: pointer;
+	 	            position: absolute;
+	 	        }
+	 	        .bar7 {background: #7BA7AB;}
+	 	        .bar7 form {
+	 	            height: 42px;
+	 	        }
+	 	        .bar7 input {
+	 	            width: 250px;
+	 	            border-radius: 42px;
+	 	            border: 2px solid #324B4E;
+	 	            background: #F9F0DA;
+	 	            transition: .3s linear;
+	 	            float: right;
+	 	        }
+	 	        .bar7 input:focus {
+	 	            width: 300px;
+	 	        }
+	 	        .bar7 button {
+	 	            background: none;
+	 	            top: -2px;
+	 	            right: 0;
+	 	        }
+	 	        .bar7 button:before{
+	 	          content: "\f002";
+	 	          font-family: FontAwesome;
+	 	          color: #324b4e;
+	 	        } 
+	#left_cnt img{
+		width: 100px;
+		height: 100px;
+	}
+	</style>
+</head>
+<body data-cache="{{user}}">
+	<header>
+		<div class="search bar7">
+
+		        <form action="http://localhost:8080/Product/{id}" method="get">
+		            <input type="text" name="id" placeholder="探したいもの…">
+		            <button class="btn1" type="submit"></button>
+		        </form>
+   	    </div>
+		<div class="button">			
+			<button id="login">login</button>
+			<button id="regist">regist</button>
+			<button id="loginout" onclick="loginout();">loginout</button>
+		</div>
+	</header>
+	<div id="container">
+		<div id="left_cnt">
+			<img src="./pic/headimg.png">
+			<img src="./pic/cart.png">
+			<img src="./pic/collection.png">
+		</div>
+		<div id="center_cnt">
+			<div id="ad" class="dialog-btn-confirm">btn</div>
+			<div id="detail">
+				<div id="productid" class="product_box">
+					<img src="pic/ticket.png">
+					<div id="id_detail" class="">
+						<h3>[[${user}]]</h3>
+						<h4>xxx</h4>
+						<button class="seller_id btn btn-success">call</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="right_cnt"></div>
+	</div>
+	<div id="loginBox"></div>
+	<div class="container" style="padding-top:20px;display:none;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">websocket</h3>
+                </div>
+                <div class="panel-body" id="content"></div>
+            </div>
+            <input type="text" class="form-control" placeholder="msg" aria-describedby="sizing-addon1" id="msg"> 
+            <hr/>
+            <button type="button" class="btn btn-lg btn-success btn-block" onclick="emit()">Emit</button>
+        </div>
+	<footer></footer>
+</body>
+
+
+<script type="text/javascript">
+var isLogin = false;
+var currUser = $("body").data("data-cache");
+var t_url = "http://localhost:8080/Product";
+var data = {};
+
+
+$(function () {
+	//alert(test);
+	getProduct();
+	$("img").click(function function_name(e) {
+		// body...
+		$("#loginBox").dialogBox({
+				hasClose: true,
+				hasBtn: true,
+				confirmValue: 'sure',
+				confirm: function(){
+					alert('this is callback function');
+				},
+				cancelValue: 'cancel',
+				title: 'title text',
+				content: 'seller_id'
+			});
+		});
+	$(".seller_id").click(function(e) {
+		// body...
+		Success("websocket","http://localhost:8080");
+	});
+	$("#login").click(function(e) {
+		// body...
+		$("#loginBox").dialogBox({
+			hasClose: true,
+			hasBtn: true,
+			confirmValue: 'としてログイン',
+			confirm: function(){
+				putMSG("User");
+			},
+			cancelValue: 'オーナーとしてログイン',
+			cancel:function() {
+				putMSG("Seller");
+				//先进行卖家登录验证 再带参数的页面跳转，在另一个页面打开后立即加载商品表格 用bootstrap样式
+			},
+			title: "ログイン",
+			content: "<div class='form-group'><label for='exampleInputName2'>ログインID</label><input type='text' class='form-control' id='exampleInputName2'"+" placeholder='ログインID'></div><div class='form-group'><label for='exampleInputPassword3'>パスワード</label><input type='password' class='form-control' id='exampleInputPassword3' placeholder='パスワード'></div>"
+		});
+		
+	});
+		$("#regist").click(function(e) {
+			// body...
+			$("#loginBox").dialogBox({
+				hasClose: true,
+				hasBtn: true,
+				confirmValue: 'login',
+				confirm: function(){
+					regist();
+				},
+				cancelValue: 'cancel',
+				title: '登録',
+				content: "<div class=\"form-group\"><label for=\"exampleInputName2\">ログインID</label>"
+				   +"<input type=\"text\" class=\"form-control\" id=\"exampleInputName2\"placeholder=\"ログインID\"></div>"
+				   +"<div class=\"form-group\"><label for=\"exampleInputPassword3\">パスワード</label>"
+				   +"<input type=\"password\" class=\"form-control\" id=\"exampleInputPassword3\" placeholder=\"パスワード\"></div>"
+				   +"<div class=\"form-group\"><label for=\"fakename\">名前</label>"
+				   +"<input type=\"text\" class=\"form-control\" id=\"fakename\"placeholder=\"名前\"></div>"
+			});
+			
+		});
+	
+
+})
+function loginout() {
+	// body...
+	$("#loginBox").dialogBox({
+			hasClose: true,
+			hasBtn: true,
+			hasMask:true,
+			confirmValue: 'はい',
+			confirm: function(){
+				$.get("http://localhost:8080/User/cancel",function(data,status) {
+					// body...
+					alert(data);
+				},'text');
+			},
+			cancelValue: 'いいえ',
+			title: "ログイン",
+			content: "ログアウトしますか。"
+		});
+}
+function putMSG(text) {
+	// body...
+	/*$.post("http://localhost:8080/MessageBean",{detail:"this is bai",mfrom:"bcp7",mto:"tlz"},function(data,status) {
+		console.log(data+"  status:"+status);
+	},"text");*/
+	/*$.post("http://localhost:8080/User",{id:"byh",fakename:"baba",password:"zxcvbnm"},function(data,status) {
+		console.log(data+"  status:"+status);
+	},"text");*/
+	var userid =$("#exampleInputName2").val();
+	var psw =$("#exampleInputPassword3").val();
+	$.post("http://localhost:8080/"+text+"/login",{id:userid,password:psw},function(data,status) {
+		if (text=="Seller"&&status == 200){
+			window.open("shop");
+		}
+		alert(text+data);
+	});
+	
+}
+function regist() {
+	var userid =$("#exampleInputName2").val();
+	var psw =$("#exampleInputPassword3").val();
+	var fakename = $("#fakename").val();
+	$.post("http://localhost:8080/User",{id:userid,fakename:fakename,password:psw},function(data,status) {
+					alert(data);
+				},"text");
+	$.post("http://localhost:8080/Seller",{id:userid,name:fakename,password:psw},function(data,status) {
+					alert(data);
+				},"text");
+}
+function getProduct() {
+	// body...
+	$.get(t_url,function(evt){json_analysis(evt);},'json');
+}
+function json_analysis(e) {
+	// body...
+	for(var k in e){
+		$('#detail').append("<div id='"+e[k].id
+			+"' class='product_box'><img src='./pic/"+e[k].id+".jpg'　onclick='boxClicker();'><div id='"
+			+e[k].id+"_detail' class='product_detail'><h3>"+e[k].name
+			+"</h3><h4>"+e[k].brief
+			+"</h4><h4>＄"+e[k].price
+			+"</h4><button class='seller_id btn btn-success' onclick='success();'>call</button>"
+			+"<button class='putcart btn btn-info'>カートに入れ</button>"
+			+"<button class='collect btn btn-warning'>好き</button></div></div>"
+			);
+	}
+
+}
+function boxClicker() {
+	
+	Success("box","test");
+}
+function login() {
+	// body...
+	$.get("http://localhost:8080/User/bcp7",function(evt) {
+		// body...
+		console.log(evt);
+	});
+}
+function ajaxCnt(url,type,data,func) {
+	// body...
+	return $.ajax({
+		url:url,
+		type:type,
+		data:data,
+		contentType:"application/x-www-form-urlencoded",
+		success:function(data) {
+			func(data);
+		},
+		dataType:"json"
+	});
+}
+function Success(title,msg) {
+	// body...
+	if (msg==null||msg == "") {
+		msg="http://localhost:8080";
+	}
+	$("#loginBox").dialogBox({
+		hasClose: true,
+		hasMask: true,
+		title: title,
+		content: msg
+	});
+}
+
+</script>
+
+</html>

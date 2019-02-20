@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>shop</title>
+<link rel="stylesheet" type="text/css" href="css/jquery.dialogbox.css">
+	<link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.dialogBox.js"></script>
+ <script type="text/javascript" src="js/core.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+<style type="text/css">
+	.container {
+		width: 600px;
+		height: 400px;
+	}
+</style>
+</head>
+<body>
+<h1>My Shop</h1>
+<table class="table table-bordered">
+	<thead><td>商品番号</td><td>名前</td><td>値段</td><td>概要</td><td>詳細</td><td>操作</td><td>seller</td></thead>
+</table>
+<button class="" onclick="dialog();">挿入</button>
+<div id="dialogBox"></div>
+<div class="container" style="padding-top:20px;">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">websocket</h3>
+                </div>
+                <div class="panel-body" id="content"></div>
+            </div>
+            <input type="text" class="form-control" placeholder="msg" aria-describedby="sizing-addon1" id="msg">
+            <button type="button" class="btn btn-lg btn-success btn-block" onclick="emit()">Emit</button>
+        </div>
+        <div>
+			<button type="button" class="btn btn-warning" title="Popover title"    data-container="body" data-toggle="popover" data-placement="right"
+            data-content="右侧的 Popover 中的一些内容">右侧的 Popover</button>
+        </div>
+</body>
+<script type="text/javascript">
+
+var seller_id = "";
+var productUrl="http://localhost:8080/";
+var title ="";
+var content ="";
+
+(function(){
+    getProductList();
+
+    $("[data-toggle='popover']").popover();
+
+})();
+function getProductList() {
+	// body...
+	$.get(productUrl+"Seller/logined",function(data,status) {
+		// body...
+		seller_id=data.id;
+		
+	},'json');
+	$.get(productUrl+"Product",function(evt){json_analysis(evt);},'json');
+	/*$.post(productUrl+"Seller/login",{id:seller_id,password:psw},function(data,status) {
+		console.log(data);
+	});*/
+}
+function json_analysis(e) {
+	
+	for(var k in e){
+		$('table').append("<tr id=\""+e[k].id+"\">"+
+						  	"<td>"+e[k].id+"</td>"+"<td>"+e[k].name+"</td>"+"<td>￥"+e[k].price+"</td>"+"<td>"+e[k].brief+"</td>"+"<td>"+e[k].detail+"</td>"+
+						  	"<td><button onclick=\"deletepro(this);\">delete</button></td>"+
+						  	"<td>"+e[k].sellerId+"</td>"+
+						  "</tr>");
+	}
+	
+
+}
+function dialog(title,content) {
+	$("#dialogBox").dialogBox({
+		hasClose: true,
+		hasBtn: true,
+		hasMask: true,
+		confirmValue: 'add',
+		confirm: function(){
+				insert();
+		},
+		cancelValue: 'cancel',
+		cancel:function() {
+			// body..,.
+		},
+		type:"correct",
+		title: title,
+		content: content
+	});
+}
+
+function insert() {
+	// body...
+}
+function deletepro(ent) {
+	// body...
+	alert(ent.id);
+}
+/*function getId() {
+	//返回当前 URL 的查询部分（问号 ? 之后的部分）。
+    var urlParameters = location.search;
+    //声明并初始化接收请求参数的对象
+    var requestParameters = new Object();
+    //如果该求青中有请求的参数，则获取请求的参数，否则打印提示此请求没有请求的参数
+    if (urlParameters.indexOf('?') != -1)
+    {
+        //获取请求参数的字符串
+        var parameters = decodeURI(urlParameters.substr(1));
+        //将请求的参数以&分割中字符串数组
+        parameterArray = parameters.split('&');
+        //循环遍历，将请求的参数封装到请求参数的对象之中
+        for (var i = 0; i < parameterArray.length; i++) {
+            requestParameters[parameterArray[i].split('=')[0]] = (parameterArray[i].split('=')[1]);
+        }
+        console.info('theRequest is =====',requestParameters);
+    }
+    else{
+        console.info('There is no request parameters');
+    }
+    return requestParameters.id;
+}*/
+</script>
+</html>
